@@ -97,6 +97,7 @@ ___________________________________
 
 ______________________________________
 
+# Arbitrary Code Execution on ng01-cloud.acronis.com
 
 Bir gün, uygulamanın içinde bir güvenlik açığı olduğunu fark ettim. Bu güvenlik açığı, internette "Log4Shell" olarak bilinen ve ciddi bir tehdit oluşturan bir problem. Log4j adlı bir yazılım kütüphanesi, internetten gelen verileri işlerken bazı hatalar yapıyor ve bu hatalar, kötü niyetli bir kişinin uzaktan, sanki bilgisayarın başında oturuyormuş gibi komutlar çalıştırmasına olanak tanıyor. Bu problem "CVE-2021-44228" koduyla tanımlanmış.
 
