@@ -1,7 +1,7 @@
 # road
 
 * SSTI (Username and tools)
-* sqli 
+* sqli (POST AFTER GET)
 * File Upload Vulnerabilities
 * SSRF Scan
 * web cache poisoning
